@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Contacts;
+namespace App\Http\Requests\Groups;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -23,8 +22,9 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'required',  'string'],
-            'email' => ['sometimes', 'required', 'email', 'exists:users']
+            'name' => ['required', 'string'],
+            'users' => ['nullable', 'array'],
+            'avatar' => ['nullable', 'file'],
         ];
     }
 }

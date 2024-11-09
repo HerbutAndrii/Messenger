@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
-            $table->unsignedBigInteger('messageable_id');
-            $table->string('messageable_type');
+            $table->string('name');
+            $table->string('avatar')->default('default-avatar.jpg');
             $table->unsignedBigInteger('user_id');
-            
+
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
-
+                ->on('users')
+                ->onDelete('cascade');
+            
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('groups');
     }
 };

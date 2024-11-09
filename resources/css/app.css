@@ -30,7 +30,7 @@ button {
     background-color: #ffffff;
     color: black;
     padding: 15px;
-    /* text-align: center; */
+    text-align: center;
     border-bottom: 1px solid #ccc;
     font-size: 1.5em;
     font-weight: bold;
@@ -40,6 +40,29 @@ button {
 .chat-header span {
     font-size: 30px;
     margin-top: 20px;
+}
+
+.group-info :first-child {
+    font-size: 30px;
+    margin-top: 5px;
+}
+
+.group-info :last-child {
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: normal;
+} 
+
+.message-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.message-header span {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .chat-header-avatar {
@@ -73,15 +96,16 @@ button {
     position: absolute;
     background-color: #fff;
     border-radius: 15px;
-    min-width: 150px;
+    width: 170px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     z-index: 1;
     left: -500%;
 }
 
-.chat-menu-content button {
+.chat-menu-content button, 
+.chat-menu-content a {
     background: none;
-    color: #ff4352;
+    color: #555;
     width: 100%;
     padding: 12px 16px;
     font-size: 20px;
@@ -89,12 +113,18 @@ button {
     border-radius: 15px;
     transition: all 0.5s ease;
     text-align: center;
+    text-decoration: none;
     display: block;
     font-weight: bold;
     font-family: 'Lora', sans-serif;
 }
 
-.chat-menu-content button:hover {
+.chat-menu-content a {
+    width: 80%;
+}
+
+.chat-menu-content button:hover,
+.chat-menu-content a:hover {
     background-color: #f1f1f1;
     border-radius: 15px;
 }
@@ -168,7 +198,7 @@ button {
     display: none; 
     margin-top: 10px;
     margin-bottom: 5px;
-    background-color: #ffffff;
+    background-color: inherit;
     /* border: 1px solid #ccc; */
     padding: 5px;
     border-radius: 5px;
@@ -291,7 +321,9 @@ button {
 }
 
 .chat-list-container,
-.contact-list-container {
+.contact-list-container,
+.group-list-container,
+.member-list-container {
     /* width: 100%; */
     max-width: 800px;
     margin: 0 auto;
@@ -301,18 +333,23 @@ button {
     border-radius: 20px;
 }
 
-.contact-list-container {
+.contact-list-container,
+.group-list-container {
     margin-top: 30px;
 }
 
 .chat-list-header,
-.contact-list-header {
+.contact-list-header,
+.group-list-header,
+.member-list-header {
     text-align: center;
     margin-bottom: 20px;
 }
 
 .chat-list-header h1,
-.contact-list-header h1 {
+.contact-list-header h1,
+.group-list-header h1,
+.member-list-container h1 {
     font-size: 24px;
     color: #333;
     margin: 0;
@@ -320,17 +357,20 @@ button {
 }
 
 .chat-list,
-.contact-list {
+.contact-list,
+.group-list,
+.member-list {
     max-height: 600px;
     overflow-y: auto;
     border-top: 1px solid #eee;
 }
 
 .chat-item,
-.contact-item {
+.contact-item,
+.group-item,
+.member-item {
     display: flex;
     align-items: center;
-    /* padding: 15px; */
     border-bottom: 1px solid #eee;
     /* transition: background-color 0.5s ease; */
     text-decoration: none;
@@ -338,7 +378,9 @@ button {
 }
 
 .chat-item a,
-.contact-item a {
+.contact-item a,
+.group-item a,
+.member-item a {
     display: flex;
     align-items: center;
     margin-right: 10px;
@@ -353,17 +395,23 @@ button {
 }
 
 .chat-item a:hover,
-.contact-item a:hover {
+.contact-item a:hover,
+.group-item a:hover,
+.member-item a:hover {
     background-color: #f9f9f9;
 }
 
 .contact-avatar,
-.chat-avatar {
+.chat-avatar,
+.group-avatar,
+.member-avatar {
     margin-right: 20px;
 }
 
 .contact-avatar img,
-.chat-avatar img {
+.chat-avatar img,
+.group-avatar img,
+.member-avatar img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -372,20 +420,32 @@ button {
 }
 
 .chat-details,
-.contact-details {
+.contact-details,
+.group-details,
+.member-details {
     flex: 1;
 }
 
 .chat-name,
-.contact-name {
+.contact-name,
+.group-name,
+.member-name,
+.member-status {
     font-size: 18px;
     font-weight: bold;
     color: #333;
     margin-bottom: 5px;
 }
 
+.member-status {
+    margin-left: 5px;
+    font-weight: normal;
+}
+
 .chat-last-message,
-.contact-email {
+.group-last-message,
+.contact-email,
+.member-email {
     font-size: 14px;
     color: #777;
     white-space: nowrap;
@@ -394,7 +454,9 @@ button {
 }
 
 .delete-chat,
-.delete-contact {
+.delete-contact,
+.delete-group,
+.delete-member {
     font-weight: bold;
     font-size: 20px;
     padding: 8px 20px;
@@ -409,26 +471,55 @@ button {
 }
 
 .delete-chat:hover,
-.delete-contact:hover {
+.delete-contact:hover,
+.delete-group:hover,
+.delete-member:hover {
     background-color: #f83646;
     border-color: #dd0315;
     color: white;
 }
 
 .chat-list::-webkit-scrollbar,
-.contact-list::-webkit-scrollbar {
+.contact-list::-webkit-scrollbar,
+.group-list::-webkit-scrollbar,
+.member-list::-webkit-scrollbar {
     width: 6px;
 }
 
 .chat-list::-webkit-scrollbar-thumb,
-.contact-list::-webkit-scrollbar-thumb {
+.contact-list::-webkit-scrollbar-thumb,
+.group-list::-webkit-scrollbar-thumb,
+.member-list::-webkit-scrollbar-thumb {
     background-color: #ccc;
     border-radius: 3px;
 }
 
 .chat-list::-webkit-scrollbar-track,
-.contact-list::-webkit-scrollbar-track {
+.contact-list::-webkit-scrollbar-track,
+.group-list::-webkit-scrollbar-track,
+.member-list::-webkit-scrollbar-track {
     background-color: #f4f7f6;
+}
+
+.member-show {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 8px 20px;
+    margin-left: 5px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #4A90E2;
+    background-color: inherit;
+    border: 1px solid #4A90E2;
+}
+
+.member-show:hover {
+    background-color: #4A90E2;
+    color: #ffffff;
+    border-color: #2165a8;
 }
 
 @media (max-width: 600px) {
@@ -447,11 +538,16 @@ button {
 }
 
 .auth-form-container,
-.create-contact-container {
+.create-contact-container,
+.create-group-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+.create-group-container {
+    height: auto;
 }
 
 .create-contact-container {
@@ -459,7 +555,8 @@ button {
 }
 
 .auth-form,
-.create-contact-form {
+.create-contact-form,
+.create-group-form {
     /* display: flex;
     flex-direction: column;
     align-items: center; */
@@ -476,20 +573,23 @@ button {
 }
 
 .auth-form h1,
-.create-contact-form h1 {
+.create-contact-form h1,
+.create-group-form h1 {
     text-align: center;
     margin-top: 0;
 }
 
 .auth-form label,
-.create-contact-form label {
+.create-contact-form label,
+.create-group-form label {
     margin-top: 20px;
     color: #555;
     font-size: 20px;
 }
 
 .auth-form input,
-.create-contact-form input {
+.create-contact-form input,
+.create-group-form input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 20px;
@@ -503,8 +603,13 @@ button {
     font-family: 'Lora', sans-serif;
 }
 
+.create-group-form input {
+    margin-bottom: 0;
+}
+
 .auth-form button,
-.create-contact-form button {
+.create-contact-form button,
+.create-group-form button {
     padding: 10px 15px;
     margin-top: 15px;
     border: 1px solid #4A90E2;
@@ -519,18 +624,23 @@ button {
     font-family: 'Lora', sans-serif;
 }
 
+.create-group-form button {
+    margin-top: 0px;
+}
+
 .auth-form button {
     margin-top: 0;
 }
 
 .auth-form button:hover,
-.create-contact-form button:hover {
+.create-contact-form button:hover,
+.create-group-form button:hover {
     background-color: #4A90E2;
     border-color: #2165a8;
     color: white;
 }
 
-.auth-form input[type=file] {
+input[type=file] {
     /* width: 40%; */
     background: none;
     box-shadow: none;
@@ -538,7 +648,7 @@ button {
     margin-bottom: 20px;
 }
 
-.auth-form input[type=file]::file-selector-button {
+input[type=file]::file-selector-button {
     margin-right: 20px;
     font-size: 20px;
     background-color: white;
@@ -552,7 +662,7 @@ button {
     font-family: 'Lora', sans-serif;
 }
 
-.auth-form input[type=file]::file-selector-button:hover {
+input[type=file]::file-selector-button:hover {
     background-color: #86867d;
     border-color: #555454;
     color: white;
@@ -655,13 +765,15 @@ button {
     color: white;
 }
 
-.contact-edit {
+.contact-edit,
+.add-contact {
     background-color: white;
     color: #4A90E2;
     border: 1px solid #4A90E2;
 }
 
-.contact-edit:hover {
+.contact-edit:hover,
+.add-contact:hover {
     background-color: #4A90E2;
     border-color: #2165a8;
     color: white;
@@ -743,7 +855,8 @@ button {
 }
 
 .logout,
-.contact-create-link {
+.contact-create-link,
+.group-create-link {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border: 1px solid #ccc;
@@ -773,3 +886,66 @@ button {
     }
 }
 
+.user-selection-container {
+    max-width: 500px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
+    font-family: 'Lora', sans-serif;
+}
+
+.user-selection-container h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.user-selection-container select {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: #f8f9fa;
+    color: #333;
+    appearance: none;
+    overflow-y: auto;
+}
+
+.user-selection-container select option {
+    padding: 8px 10px;
+    margin: 5px 0;
+    font-size: 20px;
+    color: #333;
+    background-color: #fff;
+    border-radius: 10px;
+    font-weight: bold;
+    font-family: 'Lora', sans-serif;
+    cursor: pointer;
+}
+
+.user-selection-container select option:checked {
+    background-color: #4A90E2;
+    color: #fff;
+}
+
+.user-selection-container select::-webkit-scrollbar {
+    width: 8px;
+}
+
+.user-selection-container select::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 8px;
+}
+
+.user-selection-container select::-webkit-scrollbar-thumb:hover {
+    background-color: #888;
+}
+
+@media (max-width: 600px) {
+    .user-selection-container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+}

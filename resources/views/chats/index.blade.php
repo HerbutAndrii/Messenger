@@ -15,10 +15,10 @@
                         </div>
                         <div class="chat-details">
                             <div class="chat-name">{{ $chat->userName() }}</div>
-                            <div class="chat-last-message">{{ $chat->latestMessage() ? $chat->latestMessage()->content : 'No messages' }}</div>
+                            <div class="chat-last-message">{{ $chat->latestMessage ? $chat->latestMessage->content : 'No messages' }}</div>
                         </div>
-                        @if($chat->latestMessage())
-                            <div class="chat-time">{{ $chat->latestMessage()->updated_at->format('H:i') }}</div>
+                        @if($chat->latestMessage)
+                            <div class="chat-time">{{ $chat->latestMessage->updated_at->format('H:i') }}</div>
                         @endif
                     </a>
                     <span class="delete-chat" data-id="{{ $chat->id }}">Delete</span>

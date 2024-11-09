@@ -39,9 +39,11 @@ class ChatController extends Controller
                 'user_two_id' => $user->id
             ]);
 
-        $chat->users()->attach(auth()->user()->id);
+        if(! $chat->users()->where('users.id', auth()->user()->id)->exists()) {
+            $chat->users()->attach(auth()->user());
+        }
 
-        return redirect(route('chats.show', new ChatResource($chat)));
+        return redirect(route('chats.show', $chat));
     }
 
     public function destroy(Request $request, Chat $chat)

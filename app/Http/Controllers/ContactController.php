@@ -32,16 +32,23 @@ class ContactController extends Controller
         return view('contacts.create');
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request, ?User $user = null)
     {
-        $user = User::where('email', $request->email)->first();
+        if(! $user) {
+            $user = User::where('email', $request->email)->first();
 
-        $contact = Contact::firstOrCreate(
-            ['user_id' => $user->id, 'owner_id' => auth()->user()->id],
-            ['name' => $request->name]
-        );
+            $contact = Contact::firstOrCreate(
+                ['user_id' => $user->id, 'owner_id' => auth()->user()->id],
+                ['name' => $request->name]
+            );
+        } else {
+            $contact = Contact::firstOrCreate(
+                ['user_id' => $user->id, 'owner_id' => auth()->user()->id],
+                ['name' => $user->name]
+            );
+        }
 
-        return redirect(route('contacts.show', new ContactResource($contact)));
+        return redirect(route('contacts.show', $contact));
     }
 
     public function update(UpdateRequest $request, Contact $contact)
@@ -63,6 +70,6 @@ class ContactController extends Controller
             return response()->json(['success' => true]);
         }
         
-        return redirect(route('contacts.index'));
+        return redirect(route('profiles.show', $contact->user_id));
     }
 }

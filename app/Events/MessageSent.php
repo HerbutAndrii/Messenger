@@ -34,7 +34,8 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('Chat.' . $this->message->chat_id),
+            new PrivateChannel('chats.' . $this->message->messageable_id),
+            new PresenceChannel('groups.' . $this->message->messageable_id),
         ];
     }
 
@@ -42,7 +43,8 @@ class MessageSent implements ShouldBroadcast
     {
         return [
             'message' => new MessageResource($this->message),
-            'user' => $this->message->user
+            'user' => $this->message->user,
+            'conversation' => $this->message->messageable
         ];
     }
 }

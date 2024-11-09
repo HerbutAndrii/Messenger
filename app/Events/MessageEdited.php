@@ -34,7 +34,8 @@ class MessageEdited implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('Chat.' . $this->message->chat_id),
+            new PrivateChannel('chats.' . $this->message->messageable_id),
+            new PresenceChannel('groups.' . $this->message->messageable_id),
         ];
     }
 

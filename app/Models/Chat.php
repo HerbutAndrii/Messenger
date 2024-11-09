@@ -13,7 +13,7 @@ class Chat extends Model
 
     public function messages() 
     {
-        return $this->hasMany(Message::class);
+        return $this->morphMany(Message::class, 'messageable');
     }
 
     public function users() 
@@ -33,7 +33,7 @@ class Chat extends Model
 
     public function latestMessage()
     {
-        return $this->messages()->one()->latestOfMany()->first();
+        return $this->messages()->one()->latestOfMany();
     }
 
     public function userAvatar()
@@ -46,6 +46,6 @@ class Chat extends Model
         $user = $this->userOne->id === auth()->user()->id ? $this->userTwo : $this->userOne;
         $contact = $user->relatedContacts()->where('owner_id', auth()->user()->id)->first();
 
-        return $contact->name;
+        return $contact->name ?? $user->name;
     }
 }

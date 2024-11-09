@@ -11,16 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('group_user', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
-            $table->unsignedBigInteger('messageable_id');
-            $table->string('messageable_type');
+            $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('user_id');
-            
+
+            $table->foreign('group_id')
+                ->references('id')
+                ->on('groups')
+                ->onDelete('cascade');
+
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -31,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('group_user');
     }
 };

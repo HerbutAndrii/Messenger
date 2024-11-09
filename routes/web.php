@@ -3,9 +3,11 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,16 +35,30 @@ Route::middleware('auth')->group(function () {
     Route::get('/chats/{chat}', [ChatController::class, 'show'])->name('chats.show');
     Route::delete('/chats/{chat}', [ChatController::class, 'destroy'])->name('chats.destroy');
     
-    Route::post('chats/{chat}/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::post('/chats/{chat}/messages', [MessageController::class, 'chatMessageStore'])->name('chats.messages.store');
+    Route::post('/groups/{group}/messages', [MessageController::class, 'groupMessageStore'])->name('groups.messages.store');
     Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
     Route::put('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
 
     Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
     Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
-    Route::post('/contacts/store', [ContactController::class, 'store'])->name('contacts.store');
+    Route::post('/contacts/store/{user?}', [ContactController::class, 'store'])->name('contacts.store');
     Route::get('/contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');
     Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
     Route::put('/contacts/{contact}', [ContactController::class, 'update'])->name('contacts.update');
+
+    Route::get('/groups', [GroupController::class, 'index'])->name('groups.index');
+    Route::get('/groups/create', [GroupController::class, 'create'])->name('groups.create');
+    Route::get('/groups/{group}', [GroupController::class, 'show'])->name('groups.show');
+    Route::put('/groups/update/{group}', [GroupController::class, 'update'])->name('groups.update');
+    Route::post('/groups/store', [GroupController::class, 'store'])->name('groups.store');
+    Route::get('/groups/edit/{group}', [GroupController::class, 'edit'])->name('groups.edit');
+    Route::get('/groups/{group}/members', [GroupController::class, 'showMembers'])->name('groups.show.members');
+    Route::delete('/groups/{group}/remove/{user}', [GroupController::class, 'removeMember'])->name('groups.remove.member');
+    Route::delete('/groups/leave/{group}', [GroupController::class, 'leave'])->name('groups.leave');
+    Route::delete('/groups/delete/{group}', [GroupController::class, 'destroy'])->name('groups.destroy');
+
+    Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profiles.show');
 
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });

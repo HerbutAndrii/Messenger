@@ -17,7 +17,7 @@ class MessageDeleted implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $messageId;
-    public $chatId;
+    public $conversationId;
 
     /**
      * Create a new event instance.
@@ -25,7 +25,7 @@ class MessageDeleted implements ShouldBroadcast
     public function __construct($messageId, $chatId)
     {
         $this->messageId = $messageId;
-        $this->chatId = $chatId;
+        $this->conversationId = $chatId;
     }
 
     /**
@@ -36,7 +36,8 @@ class MessageDeleted implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('Chat.' . $this->chatId),
+            new PrivateChannel('chats.' . $this->conversationId),
+            new PresenceChannel('groups.' . $this->conversationId)
         ];
     }
 

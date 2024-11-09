@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Chat')
+@section('title', 'Login')
 @section('content')
     <div class="auth-form-container">
         <div class="auth-form">

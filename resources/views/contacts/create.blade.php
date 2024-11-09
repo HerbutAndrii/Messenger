@@ -9,14 +9,14 @@
                 @csrf
                 <label>
                     Name <br>
-                    <input type="text" name="name" placeholder="Enter contact name">
+                    <input type="text" name="name" placeholder="Enter contact name" value="{{ old('name') }}">
                 </label>
                 @error('name')
                     <div style="color: red; font-size: 20px; margin-bottom: 20px" >{{ $message }}</div>
                 @enderror
                 <label>
                     Email <br>
-                    <input type="email" name="email" placeholder="Enter contact email">
+                    <input type="email" name="email" placeholder="Enter contact email" value="{{ old('email') }}">
                 </label>
                 @error('email')
                     <div style="color: red; font-size: 20px; margin-bottom: 20px" >{{ $message }}</div>
