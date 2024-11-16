@@ -129,6 +129,22 @@ button {
     border-radius: 15px;
 }
 
+#typing-indicator {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    font-size: 25px;
+    border-radius: 15px;
+    max-width: 75%;
+    word-wrap: break-word;
+    position: relative;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #888;
+    align-self: flex-start;
+    border-top-left-radius: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .message-area {
     flex: 1;
     padding: 10px;
@@ -871,7 +887,8 @@ input[type=file]::file-selector-button:hover {
 }
 
 .logout:hover,
-.contact-create-link:hover {
+.contact-create-link:hover,
+.group-create-link:hover {
     background-color: #dfdfdf;
 }
 

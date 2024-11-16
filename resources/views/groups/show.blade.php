@@ -59,6 +59,7 @@
                     </div>
                 @endif
             @endforeach
+            <div id="typing-indicator" style="display: none;">User is typing...</div>
         </div>
         <form action="{{ route('groups.messages.store', $group) }}" method="POST" id="chat-input">
             @csrf
@@ -85,6 +86,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (data) {
+                        $('#typing-indicator').remove();
                         $('#messages').append(
                             '<div class="message sent" data-id="' + data.message.id + '">' + 
                                 '<span class="message-content">' + data.message.content + '</span>' + 
@@ -153,10 +155,36 @@
                         message.find('.timestamp').text(new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }));
                         console.log('Message edited');
                     },
-                    errro: function (error) {
+                    error: function (error) {
                         console.log(error);
                     }
                 });
+            }
+        });
+
+        function typing(isTyping) {
+            axios.post("{{ route('groups.messages.typing', ':id') }}".replace(':id', '{{ $group->id }}'), {
+                is_typing: isTyping
+            });
+        }
+
+        var typingTimeout1;
+        var typingTimeout2;
+
+        $('#chat-input').keyup(function (event) {
+            if(event.which != 13) {
+                clearTimeout(typingTimeout2);
+                clearTimeout(typingTimeout1);
+                typingTimeout2 = setTimeout(() => {
+                    typing(true);
+                    typingTimeout1 = setTimeout(() => {
+                        typing(false);
+                    }, 3000);
+                }, 500);
+            } else {
+                clearTimeout(typingTimeout2);
+                clearTimeout(typingTimeout1);
+                typing(false);
             }
         });
 
@@ -210,6 +238,7 @@
                 console.log(error);
             })
             .listen('MessageSent', (e) => {
+                $('#typing-indicator').remove();
                 var userAvatar = "{{ asset('storage/avatars') }}" + '/' + e.user.avatar;
                 $('#messages').append(
                     '<div class="message-header" data-id="' + e.message.id + '">' + 
@@ -223,7 +252,7 @@
                         '<span class="timestamp">' + new Date(e.message.updated_at).toLocaleString([], { hour: '2-digit', minute: '2-digit' }) + '</span>' +
                     '</div>' 
                 );
-                if({{ auth()->user()->id }} == e.conversation.user_id) {
+                if({{ auth()->user()->id }} == {{ $group->user_id }}) {
                     $('.message[data-id="' + e.message.id + '"]').append(
                         '<div class="message-options">' + 
                             '<span class="delete-message">Delete</span>' +
@@ -241,6 +270,18 @@
                 var message = $('.message[data-id="' + e.message.id + '"]');
                 message.find('.message-content').text(e.message.content);
                 message.find('.timestamp').text(new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }));
+            })
+            .listen('UserTyping', (e) => {
+                if(! $('#typing-indicator').length) {
+                    $('#messages').append('<div id="typing-indicator" style="display: none;"></div>');
+                }
+
+                if(e.isTyping) {
+                    $('#typing-indicator').text('Typing...');
+                    $('#typing-indicator').slideDown();
+                } else {
+                    $('#typing-indicator').slideUp();
+                }
             });
 
     </script>

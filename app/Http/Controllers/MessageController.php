@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Events\MessageDeleted;
 use App\Events\MessageEdited;
 use App\Events\MessageSent;
+use App\Events\UserTyping;
 use App\Http\Requests\Messages\StoreRequest;
 use App\Http\Requests\Messages\UpdateRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Chat;
 use App\Models\Group;
 use App\Models\Message;
+use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
@@ -64,6 +66,20 @@ class MessageController extends Controller
         $message->delete();
 
         broadcast(new MessageDeleted($message->id, $message->messageable_id))->toOthers();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function groupMessageTyping(Request $request, Group $group)
+    {
+        broadcast(new UserTyping($group, $request->is_typing))->toOthers();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function chatMessageTyping(Request $request, Chat $chat)
+    {
+        broadcast(new UserTyping($chat, $request->is_typing))->toOthers();
 
         return response()->json(['success' => true]);
     }

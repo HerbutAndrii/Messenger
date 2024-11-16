@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/groups/{group}/messages', [MessageController::class, 'groupMessageStore'])->name('groups.messages.store');
     Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
     Route::put('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
+    Route::post('/groups/{group}/messages/typing', [MessageController::class, 'groupMessageTyping'])->name('groups.messages.typing');
+    Route::post('/chats/{chat}/messages/typing', [MessageController::class, 'chatMessageTyping'])->name('chats.messages.typing');
 
     Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
     Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
