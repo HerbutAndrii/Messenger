@@ -9,6 +9,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/groups/delete/{group}', [GroupController::class, 'destroy'])->name('groups.destroy');
 
     Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profiles.show');
+
+    Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+    Route::get('/search/users', [SearchController::class, 'users'])->name('search.users');
+    Route::get('/search/members/{group}', [SearchController::class, 'members'])->name('search.members');
+    Route::get('/search/chats', [SearchController::class, 'chats'])->name('search.chats');
+    Route::get('/search/contacts', [SearchController::class, 'contacts'])->name('search.contacts');
+    Route::get('/search/groups', [SearchController::class, 'groups'])->name('search.groups');
 
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });

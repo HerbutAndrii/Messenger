@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Groups\StoreRequest;
 use App\Http\Requests\Groups\UpdateRequest;
-use App\Http\Resources\ContactResource;
-use App\Http\Resources\GroupResource;
-use App\Http\Resources\MessageResource;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,7 +13,7 @@ class GroupController extends Controller
 {
     public function index(Request $request)
     {
-        $groups = GroupResource::collection($request->user()->groups()->get());
+        $groups = $request->user()->groups()->get();
 
         return view('groups.index', compact('groups'));
     }
@@ -25,15 +22,14 @@ class GroupController extends Controller
     {
         $this->authorize('view', $group);
 
-        $group = new GroupResource($group);
-        $messages = MessageResource::collection($group->messages()->get());
+        $messages = $group->messages()->get();
 
         return view('groups.show', compact('group', 'messages'));
     }
 
     public function create(Request $request)
     {
-        $contacts = ContactResource::collection($request->user()->contacts()->get());
+        $contacts = $request->user()->contacts()->get();
 
         return view('groups.create', compact('contacts'));
     }
@@ -64,8 +60,7 @@ class GroupController extends Controller
 
     public function edit(Request $request, Group $group)
     {
-        $group = new GroupResource($group);
-        $contacts = ContactResource::collection($request->user()->contacts()->get());
+        $contacts = $request->user()->contacts()->get();
 
         return view('groups.edit', compact('group', 'contacts'));
     }

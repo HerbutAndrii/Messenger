@@ -19,6 +19,8 @@ class ContactResource extends JsonResource
             'name' => $this->name,
             'user_id' => $this->user_id,
             'owner_id' => $this->owner_id,
+            'avatar' => $this->user->avatar,
+            'email' => $this->user->email,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

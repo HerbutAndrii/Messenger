@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Http\Resources\MessageResource;
+use App\Http\Resources\UserResource;
 use App\Models\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -43,7 +44,7 @@ class MessageSent implements ShouldBroadcast
     {
         return [
             'message' => new MessageResource($this->message),
-            'user' => $this->message->user,
+            'user' => new UserResource($this->message->user),
         ];
     }
 }

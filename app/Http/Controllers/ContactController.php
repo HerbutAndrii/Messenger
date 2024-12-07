@@ -13,7 +13,7 @@ class ContactController extends Controller
 {
     public function index(Request $request)
     {
-        $contacts = ContactResource::collection($request->user()->contacts()->get());
+        $contacts = $request->user()->contacts()->get();
 
         return view('contacts.index', compact('contacts'));
     }
@@ -22,8 +22,6 @@ class ContactController extends Controller
     {
         $this->authorize('view', $contact);
         
-        $contact = new ContactResource($contact);
-
         return view('contacts.show', compact('contact'));
     }
 

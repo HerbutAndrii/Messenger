@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ChatResource;
-use App\Http\Resources\MessageResource;
 use App\Models\Chat;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,7 +10,7 @@ class ChatController extends Controller
 {
     public function index(Request $request) 
     {
-        $chats = ChatResource::collection($request->user()->chats()->get());
+        $chats = $request->user()->chats()->get();
 
         return view('chats.index', compact('chats'));
     }
@@ -21,8 +19,7 @@ class ChatController extends Controller
     {
         $this->authorize('view', $chat);
         
-        $chat = new ChatResource($chat);
-        $messages = MessageResource::collection($chat->messages()->get());
+        $messages = $chat->messages()->get();
 
         return view('chats.show', compact('chat', 'messages'));
     }
