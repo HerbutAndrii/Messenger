@@ -25,6 +25,7 @@
                 @enderror 
                 <button type="submit">Login</button>
             </form>
+            <a href="{{ route('register.show') }}" class="register-link">Create an account</a>
         </div>
     </div>
 @endsection

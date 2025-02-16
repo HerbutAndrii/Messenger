@@ -7,9 +7,11 @@ namespace App\Providers;
 use App\Models\Chat;
 use App\Models\Contact;
 use App\Models\Message;
+use App\Models\User;
 use App\Policies\ChatPolicy;
 use App\Policies\ContactPolicy;
 use App\Policies\MessagePolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -23,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         Chat::class => ChatPolicy::class,
         Message::class => MessagePolicy::class,
         Contact::class => ContactPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**

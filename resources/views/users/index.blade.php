@@ -7,7 +7,7 @@
             <h1>Search Users</h1>
         </div>
         <div class="search-input-area">
-            <input class="search-input" type="text" name="search" placeholder="Search users...">
+            <input class="search-input" type="text" name="search" placeholder="Search...">
         </div>
         <div class="user-list"></div>
         <div id="search-results" style="display: none"></div>

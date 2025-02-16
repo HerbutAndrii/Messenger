@@ -19,7 +19,7 @@
                         <div class="member-details">
                             <div style="display: flex">
                                 <div class="member-name">{{ auth()->user()->id === $member->id ? 'You' : $member->name }}</div>
-                                <div class="member-status">| Offline</div>
+                                <div class="member-status">{{ auth()->user()->id === $member->id ? '| Online' : '| Offline' }}</div>
                             </div>
                             <div class="member-email">{{ $member->email }}</div>
                         </div>

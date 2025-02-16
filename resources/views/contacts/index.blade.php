@@ -8,7 +8,7 @@
             <h1>Your Contacts</h1>
         </div>
         <div class="search-input-area">
-            <input class="search-input" type="text" name="search" placeholder="Search contacts...">
+            <input class="search-input" type="text" name="search" placeholder="Search...">
         </div>
         <div class="contact-list">
             @foreach($contacts as $contact)

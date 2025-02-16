@@ -8,7 +8,7 @@
             <h1>Your Groups</h1>
         </div>
         <div class="search-input-area">
-            <input class="search-input" type="text" name="search" placeholder="Search groups...">
+            <input class="search-input" type="text" name="search" placeholder="Search...">
         </div>
         <div class="group-list">
             @foreach($groups as $group)

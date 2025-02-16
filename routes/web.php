@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/groups/delete/{group}', [GroupController::class, 'destroy'])->name('groups.destroy');
 
     Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profiles.show');
+    Route::put('/profiles/{user}/update', [ProfileController::class, 'update'])->name('profiles.update');
 
     Route::get('/search', [SearchController::class, 'index'])->name('search.index');
     Route::get('/search/users', [SearchController::class, 'users'])->name('search.users');

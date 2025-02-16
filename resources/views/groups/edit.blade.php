@@ -13,7 +13,7 @@
                     <input type="text" name="name" placeholder="Enter group name" value="{{ old('name', $group->name) }}">
                 </label>
                 @error('name')
-                    <div style="color: red; font-size: 20px; margin-bottom: 20px" >{{ $message }}</div>
+                    <div style="color: red; font-size: 20px; margin-top: 10px" >{{ $message }}</div>
                 @enderror
                 <div class="user-selection-container">
                     <label>

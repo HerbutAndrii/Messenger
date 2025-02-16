@@ -682,6 +682,7 @@ button {
 
 .auth-form button {
     margin-top: 0;
+    margin-bottom: 20px;
 }
 
 .auth-form button:hover,
@@ -690,6 +691,12 @@ button {
     background-color: #4A90E2;
     border-color: #2165a8;
     color: white;
+}
+
+.login-link,
+.register-link {
+    font-size: 17px;
+    color: #555;
 }
 
 input[type=file] {
@@ -818,6 +825,7 @@ input[type=file]::file-selector-button:hover {
 }
 
 .contact-edit,
+.profile-edit,
 .add-contact {
     background-color: white;
     color: #4A90E2;
@@ -825,6 +833,7 @@ input[type=file]::file-selector-button:hover {
 }
 
 .contact-edit:hover,
+.profile-edit:hover,
 .add-contact:hover {
     background-color: #4A90E2;
     border-color: #2165a8;

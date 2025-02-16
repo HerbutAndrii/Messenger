@@ -7,7 +7,7 @@
             <h1>Your Chats</h1>
         </div>
         <div class="search-input-area">
-            <input class="search-input" type="text" name="search" placeholder="Search chats...">
+            <input class="search-input" type="text" name="search" placeholder="Search...">
         </div>
         <div class="chat-list">
             @foreach($chats as $chat)
